@@ -200,8 +200,50 @@ GROUP by
 Resultado
 name	neighborhood_id
 Loop	50
-O'Hare	63
+OHare	63
 
+5.Para cada hora recupera los registros de condiciones meteorológicas de la tabla weather_records. 
+Usando el operador CASE, divide todas las horas en dos grupos: Bad si el campo description contiene las palabras rain o storm, y Good para los demás. 
+Nombra el campo resultante weather_conditions. La tabla final debe incluir dos campos: fecha y hora (ts) y weather_conditions.
+
+CONSEJO
+Utiliza los operadores CASE, LIKE y OR.
+Las primeras filas de la tabla resultante deberían ser así:
+ts	weather_conditions
+2017-11-01 00:00:00	Good
+2017-11-01 01:00:00	Good
+2017-11-01 02:00:00	Good
+
+SELECT
+    ts,
+    CASE
+        WHEN description LIKE '%rain%' OR description LIKE '%storm%' THEN 'Bad'
+        ELSE 'Good'
+    END AS weather_conditions
+FROM 
+    weather_records;
+
+6.Recupera de la tabla de trips todos los viajes que comenzaron en el Loop (pickup_location_id: 50) el sábado y terminaron en OHare (dropoff_location_id: 63). Obtén las condiciones climáticas para cada viaje. Utiliza el método que aplicaste en la tarea anterior. Recupera también la duración de cada viaje. Ignora los viajes para los que no hay datos disponibles sobre las condiciones climáticas.
+
+Las columnas de la tabla deben estar en el siguiente orden:
+
+start_ts
+weather_conditions
+duration_seconds
+Ordena por trip_id.
+
+CONSEJO
+Usa INNER JOIN y aplica EXTRACT (DOW from trips.start_ts) = 6 para recuperar datos sobre los viajes de los sábados.
+
+Las primeras filas de la tabla resultante deberían ser así:
+
+start_ts	weather_conditions	duration_seconds
+2017-11-25 12:00:00	Good	1380
+2017-11-25 16:00:00	Good	2410
+
+PENDIENTE
+
+PASAR A ARCHIVO 2: Proyeccto final S8.ipynb
 
 
 
